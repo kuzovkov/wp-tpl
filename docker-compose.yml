@@ -1,0 +1,42 @@
+version: '3.3'
+
+services:
+   db:
+     image: mysql:5.7
+     volumes:
+       - db-data:/var/lib/mysql
+       - ./db/dump:/dump
+     #restart: always
+     environment:
+       MYSQL_ROOT_PASSWORD: rootp@ssw0rd
+       MYSQL_DATABASE: wordpress
+       MYSQL_USER: wordpress
+       MYSQL_PASSWORD: userp@ssw0rd
+   nginx:
+     image: nginx:1.11-alpine
+     #restart: always
+     depends_on:
+      - wp
+     ports:
+       - "8003:80"
+     dns: 8.8.8.8
+     volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./wordpress:/var/www/html
+   wp:
+     depends_on:
+       - db
+     build: .
+     #restart: always
+     dns: 8.8.8.8
+     environment:
+       WORDPRESS_DB_HOST: db:3306
+       WORDPRESS_DB_USER: wordpress
+       WORDPRESS_DB_NAME: wordpress
+       WORDPRESS_DB_PASSWORD: userp@ssw0rd
+     volumes:
+        - ./wordpress:/var/www/html
+
+volumes:
+    db-data: {}
