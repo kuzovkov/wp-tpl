@@ -45,3 +45,11 @@ Fixing "Unknown collation: ‘utf8mb4_unicode_520_ci"
 ```bash
 sed -i 's/utf8mb4_unicode_520_ci/utf8mb4_unicode_ci/g' dump.sql
 ```
+
+If wordpress ask you FTP account when new plugin install:
+
+add line to `wp-config.php`
+
+```php
+define( 'FS_METHOD', 'direct' );
+```
