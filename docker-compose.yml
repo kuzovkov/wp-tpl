@@ -7,6 +7,8 @@ services:
        - db-data:/var/lib/mysql
        - ./db/dump:/dump
      #restart: always
+     ports:
+       - "13306:3306"
      environment:
        MYSQL_ROOT_PASSWORD: rootp@ssw0rd
        MYSQL_DATABASE: wordpress
