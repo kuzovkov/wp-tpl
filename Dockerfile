@@ -16,6 +16,7 @@ RUN set -ex; \
 		libjpeg-turbo-dev \
 		libpng-dev \
 		libzip-dev \
+		libxml2-dev \
 	; \
 	\
 	docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \
@@ -26,6 +27,7 @@ RUN set -ex; \
 		mysqli \
 		opcache \
 		zip \
+		soap \
 	; \
 	pecl install imagick-3.4.4; \
 	docker-php-ext-enable imagick; \
