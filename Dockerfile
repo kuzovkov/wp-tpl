@@ -40,7 +40,11 @@ RUN set -ex; \
 	)"; \
 	apk add --virtual .wordpress-phpexts-rundeps $runDeps; \
 	apk del .build-deps
-
+#Install YAML extension
+RUN apk add --no-cache --virtual .build-deps \
+    g++ make autoconf yaml-dev
+RUN pecl channel-update pecl.php.net
+RUN pecl install yaml-2.0.4 && docker-php-ext-enable yaml
 # set recommended PHP.ini settings
 # see https://secure.php.net/manual/en/opcache.installation.php
 RUN { \
@@ -72,4 +76,12 @@ RUN chmod +x /usr/local/bin/app-start
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
     chmod +x wp-cli.phar && \
     mv wp-cli.phar /usr/local/bin/wp
+
+#Install composer
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
+php -r "if (hash_file('sha384', 'composer-setup.php') === 'a5c698ffe4b8e849a443b120cd5ba38043260d5c4023dbf93e1558871f1f07f58274fc6f4c93bcfd858c6bd0775cd8d1') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" && \
+php composer-setup.php --install-dir=/usr/local/bin --filename=composer && \
+php -r "unlink('composer-setup.php');" && \
+chmod a+x /usr/local/bin/composer
+
 CMD ["app-start"]
