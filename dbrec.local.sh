@@ -30,7 +30,7 @@ case "$1" in
     mysql -u$DB_USER -p$DB_PASS -e "USE $DB_NAME; UPDATE $DB_NAME.wp_options SET option_value= '$2' WHERE wp_options.option_name ='home';"
     ;;
 
-  filldb2)
+  fixdb)
         echo "Fix 'Unknown collation: ‘utf8mb4_unicode_520_ci'"
         mysql -u$DB_USER -p$DB_PASS -e "DROP DATABASE IF EXISTS $DB_NAME"
         mysql -u$DB_USER -p$DB_PASS -e "CREATE DATABASE IF NOT EXISTS $DB_NAME"
