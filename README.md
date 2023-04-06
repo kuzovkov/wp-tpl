@@ -1,4 +1,4 @@
-###I. Install
+### I. Install
 
 ```bash
 git clone https://github.com/kuzovkov/wp-tpl mysite
@@ -26,7 +26,7 @@ Please use `dbname`, `dbuser`, `dbpass` from `docker-compose.yml`.
 
 Set `db` as `dbhost`
 
-###II. Developing
+### II. Developing
 
 ```bash
 #dump database
@@ -38,7 +38,7 @@ Set `db` as `dbhost`
 ./dbrec.sh
 ```    
 
-###III. Trobleshuting
+### III. Trobleshuting
     
 Fixing "Unknown collation: ‘utf8mb4_unicode_520_ci"
 
